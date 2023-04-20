@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/userDB");
+mongoose.connect("mongodb+srv://admin-ronit:test123@cluster0.9patj21.mongodb.net/?retryWrites=true&w=majority");
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -153,7 +153,7 @@ app.post("/submit", (req, res)=>{
 
     User.findById(userId).then((foundUser)=>{
         foundUser.secret.push(submittedSecret);
-        console.log(foundUser.secret);
+        // console.log(foundUser.secret);
         foundUser.save().then(()=>{
             res.redirect("/secrets");
         }).catch((err)=>{
