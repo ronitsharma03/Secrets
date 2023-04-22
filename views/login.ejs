@@ -1,30 +1,33 @@
 <%- include('partials/header') %>
 
   <div class="container mt-5">
-    <h1 class="heading-login">Login</h1>
-
     <div class="row">
-
-      <div class="card-login">
-        <div class="card-body-login-1">
-
-          <!-- Makes POST request to /login route -->
-          <form action="/login" method="POST">
-            <input type="email" class="form-control" name="username" placeholder="Enter your email" required>
-            <input type="password" placeholder="Password" class="form-control" name="password" required>
-            <button type="submit" class="btn btn-dark">Login</button>
-          </form>
-
+      <div class="card-body-login-1">
+        <span class="heading-login">Login</span>
+        <br>
+        <span class="no-account">Don't have an account? <a href="/register"> <b> Sign up</b> </a> </span>
+        <!-- Makes POST request to /login route -->
+        <form action="/login" method="POST">
+          <input type="email" class="form-control" name="username" placeholder="Enter your email" required>
+          <input type="password" placeholder="Password" class="form-control" name="password" required>
+          <button type="submit" class="btn btn-dark">Login</button>
+        </form>
+        <p id="alt-login">or login using</p>
+        <div class="btn-google">
+          <a class="btn-google-btn" href="/auth/google" role="button">
+            <i class="fab fa-google"></i>
+            Google
+          </a>
         </div>
       </div>
-      
+
+      <div class="logo">
+        <i class="fa-solid fa-key fa-10x fa-dark"></i>
+        <div class="logo-text">
+          <h2 class="second-heading">
+            Ready to share your secrets anonymously!
+          </h2>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="btn-google">
-    <a class="btn-google-btn" href="/auth/google" role="button">
-      <i class="fab fa-google "></i>
-      Sign In with Google
-    </a>
-  </div>
-
-  <%- include('partials/footer') %>
