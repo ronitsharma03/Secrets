@@ -98,17 +98,20 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/secrets", (req, res) => {
-
-    User.find({ "secret": { $ne: null } }).then((foundUsers) => {
-        res.render("secrets", { usersWithSecrets: foundUsers, localUser: localUser, googleUser: googleUser });
-    }).catch((err) => {
-        console.log(err);
-    });
+    if (req.isAuthenticated()) {
+        User.find({ "secret": { $ne: null } }).then((foundUsers) => {
+            res.render("secrets", { usersWithSecrets: foundUsers, localUser: localUser, googleUser: googleUser });
+        }).catch((err) => {
+            console.log(err);
+        });
+    } else{
+        res.render("failure");
+    }
 });
 
 app.get("/submit", (req, res) => {
     if (req.isAuthenticated()) {
-        res.render("submit", {localUser: localUser, googleUser: googleUser });
+        res.render("submit", { localUser: localUser, googleUser: googleUser });
     } else {
         res.redirect("/");
     }
@@ -121,7 +124,7 @@ app.get("/logout", (req, res) => {
     });
 });
 
-app.get("/failure", (req, res)=>{
+app.get("/failure", (req, res) => {
     res.render("failure")
 });
 
@@ -145,23 +148,23 @@ app.post("/register", (req, res) => {
 //         username: req.body.username,
 //         password: req.body.password
 //     });
-    // req.login(user, (err) => {
-    //     if (err) {
-    //         console.log(err)
-    //     }
-    //     else {
-    //         passport.authenticate("local")(req, res, () => {
-    //             res.redirect("/secrets");
-    //         })
-    //     }
-    // })
+// req.login(user, (err) => {
+//     if (err) {
+//         console.log(err)
+//     }
+//     else {
+//         passport.authenticate("local")(req, res, () => {
+//             res.redirect("/secrets");
+//         })
+//     }
+// })
 // });
 
 app.post('/login', passport.authenticate('local', {
-      successRedirect: '/submit', // Redirect to success page
-      failureRedirect: '/failure' // Redirect to failure page
-    })
-  );
+    successRedirect: '/submit', // Redirect to success page
+    failureRedirect: '/failure' // Redirect to failure page
+})
+);
 
 app.post("/submit", (req, res) => {
     const submittedSecret = req.body.secret;
@@ -181,7 +184,7 @@ app.post("/submit", (req, res) => {
 });
 
 
-const port =  process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server started at port ${port}..`);
 })
